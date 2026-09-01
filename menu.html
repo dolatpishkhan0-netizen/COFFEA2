@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A2 CAFE - منو</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a2e;
+            --purple: #a855f7;
+            --purple-light: #d946ef;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --border: #2d2d44;
+        }
+
+        body {
+            font-family: 'Tahoma', 'Arial', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-bottom: 2px solid var(--purple);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: var(--purple-light);
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .admin-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: var(--purple-light);
+            transform: scale(1.05);
+        }
+
+        /* ===== SEARCH BAR ===== */
+        .search-container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 90%;
+            max-width: 400px;
+            padding: 12px 20px;
+            border: 2px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-main);
+            border-radius: 25px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+
+        /* ===== CATEGORIES ===== */
+        .categories {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--border);
+            background: transparent;
+            color: var(--text-main);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .cat-btn.active {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: white;
+        }
+
+        .cat-btn:hover {
+            border-color: var(--purple);
+        }
+
+        /* ===== MENU GRID ===== */
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .menu-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+        }
+
+        .menu-card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #2d2d44, #1a1a2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .menu-card-content {
+            padding: 20px;
+        }
+
+        .menu-card-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--purple-light);
+            margin-bottom: 8px;
+        }
+
+        .menu-card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            min-height: 30px;
+        }
+
+        .menu-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-card-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--purple);
+        }
+
+        .menu-card-price::after {
+            content: " تومان";
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .order-btn {
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .order-btn:hover {
+            background: var(--purple-light);
+        }
+
+        /* ===== ADMIN PANEL ===== */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-content {
+            background: var(--bg-card);
+            border: 2px solid var(--purple);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .admin-title {
+            font-size: 28px;
+            color: var(--purple-light);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-dark);
+            border: 2px solid var(--border);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+
+        .admin-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-submit {
+            background: var(--purple);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: var(--purple-light);
+        }
+
+        .btn-close {
+            background: var(--border);
+            color: var(--text-main);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .btn-close:hover {
+            background: #3d3d4d;
+        }
+
+        .products-list {
+            margin-top: 40px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .product-item {
+            background: var(--bg-dark);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--purple);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-item-name {
+            flex: 1;
+        }
+
+        .product-item-price {
+            color: var(--purple);
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .btn-delete {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: #f44336;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .menu-card-image {
+                height: 120px;
+                font-size: 40px;
+            }
+
+            .menu-card-content {
+                padding: 12px;
+            }
+
+            .menu-card-name {
+                font-size: 14px;
+            }
+
+            .admin-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <button class="admin-btn" onclick="openAdminPanel()">⚙️ مدیریت</button>
+        <h1>☕ A2 CAFE</h1>
+        <p>COFFEE • FOOD • EXPERIENCE</p>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-container">
+        <input 
+            type="text" 
+            class="search-input" 
+            id="searchInput" 
+            placeholder="جستجو کنید..." 
+            onkeyup="filterProducts()"
+        >
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="categories" id="categoriesContainer"></div>
+
+    <!-- MENU -->
+    <div class="menu-container" id="menuContainer"></div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-state-icon">📭</div>
+        <p>هیچ محصولی یافت نشد</p>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-panel" id="adminPanel" onclick="closeAdminPanel(event)">
+        <div class="admin-content" onclick="event.stopPropagation()">
+            <div class="admin-title">🔐 پنل مدیریت</div>
+
+            <!-- LOGIN FORM -->
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>رمز عبور:</label>
+                    <input type="password" id="passwordInput" placeholder="رمز را وارد کنید">
+                </div>
+                <button class="btn-submit" onclick="checkPassword()" style="width: 100%;">ورود</button>
+            </div>
+
+            <!-- ADMIN DASHBOARD -->
+            <div id="adminDashboard" style="display: none;">
+                <div class="form-group">
+                    <label>نام محصول:</label>
+                    <input type="text" id="productName" placeholder="مثال: قهوه اسپرسو">
+                </div>
+
+                <div class="form-group">
+                    <label>دسته‌بندی:</label>
+                    <select id="productCategory">
+                        <option value="coffee">☕ قهوه</option>
+                        <option value="food">🍔 فست‌فود</option>
+                        <option value="drink">🥤 نوشیدنی</option>
+                        <option value="dessert">🍰 دسر</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>قیمت (تومان):</label>
+                    <input type="number" id="productPrice" placeholder="مثال: 25000">
+                </div>
+
+                <div class="form-group">
+                    <label>توضیح:</label>
+                    <textarea id="productDesc" placeholder="توضیح محصول..." rows="3"></textarea>
+                </div>
+
+                <div class="admin-buttons">
+                    <button class="btn-submit" onclick="addProduct()">➕ افزودن</button>
+                    <button class="btn-close" onclick="closeAdminPanel()">بستن</button>
+                </div>
+
+                <div class="products-list">
+                    <h3 style="color: var(--purple-light); margin-bottom: 15px;">📦 محصولات:</h3>
+                    <div id="productsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "1234"; // رمز عبور
+        const STORAGE_KEY = "a2_cafe_products";
+        const CATEGORIES = {
+            coffee: "☕ قهوه",
+            food: "🍔 فست‌فود",
+            drink: "🥤 نوشیدنی",
+            dessert: "🍰 دسر"
+        };
+
+        const DEFAULT_PRODUCTS = [
+            { id: 1, cat: "coffee", name: "اسپرسو", price: "15000", desc: "قهوه خالص و غلیظ", icon: "☕" },
+            { id: 2, cat: "coffee", name: "کاپوچینو", price: "25000", desc: "اسپرسو با شیر و فوم", icon: "☕" },
+            { id: 3, cat: "coffee", name: "لاته", price: "28000", desc: "اسپرسو با شیر داغ", icon: "☕" },
+            { id: 4, cat: "food", name: "برگر کلاسیک", price: "45000", desc: "گوشت، پنیر و سبزیجات", icon: "🍔" },
+            { id: 5, cat: "food", name: "فیله برگر", price: "55000", desc: "فیله گوشت خوشمزه", icon: "🍔" },
+            { id: 6, cat: "drink", name: "آب نعناع", price: "12000", desc: "آب معدنی سرد با نعناع", icon: "🥤" },
+        ];
+
+        let products = [];
+        let filteredProducts = [];
+        let currentCategory = "all";
+        let isLoggedIn = false;
+
+        // Load products
+        function loadProducts() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            products = saved ? JSON.parse(saved) : [...DEFAULT_PRODUCTS];
+            filteredProducts = [...products];
+            render();
+        }
+
+        // Save products
+        function saveProducts() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+        }
+
+        // Render menu
+        function render() {
+            const container = document.getElementById("menuContainer");
+            const empty = document.getElementById("emptyState");
+
+            if (filteredProducts.length === 0) {
+                container.innerHTML = "";
+                empty.style.display = "block";
+                return;
+            }
+
+            empty.style.display = "none";
+            container.innerHTML = filteredProducts.map(p => `
+                <div class="menu-card">
+                    <div class="menu-card-image">${p.icon || CATEGORIES[p.cat].charAt(0)}</div>
+                    <div class="menu-card-content">
+                        <div class="menu-card-name">${p.name}</div>
+                        <div class="menu-card-desc">${p.desc}</div>
+                        <div class="menu-card-footer">
+                            <div class="menu-card-price">${p.price}</div>
+                            <button class="order-btn" onclick="orderProduct('${p.name}')">سفارش</button>
+                        </div>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        // Render categories
+        function renderCategories() {
+            const container = document.getElementById("categoriesContainer");
+            container.innerHTML = `<button class="cat-btn ${currentCategory === 'all' ? 'active' : ''}" onclick="setCategory('all')">همه</button>`;
+            
+            Object.entries(CATEGORIES).forEach(([key, label]) => {
+                container.innerHTML += `<button class="cat-btn ${currentCategory === key ? 'active' : ''}" onclick="setCategory('${key}')">${label}</button>`;
+            });
+        }
+
+        // Set category
+        function setCategory(cat) {
+            currentCategory = cat;
+            filterProducts();
+            renderCategories();
+        }
+
+        // Filter products
+        function filterProducts() {
+            const search = document.getElementById("searchInput").value.toLowerCase();
+            filteredProducts = products.filter(p => {
+                const matchCategory = currentCategory === "all" || p.cat === currentCategory;
+                const matchSearch = p.name.includes(search) || p.desc.includes(search);
+                return matchCategory && matchSearch;
+            });
+            render();
+        }
+
+        // Admin panel
+        function openAdminPanel() {
+            document.getElementById("adminPanel").classList.add("active");
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("adminDashboard").style.display = "none";
+            isLoggedIn = false;
+        }
+
+        function closeAdminPanel(event) {
+            if (event && event.target.id !== "adminPanel") return;
+            document.getElementById("adminPanel").classList.remove("active");
+            isLoggedIn = false;
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === ADMIN_PASSWORD) {
+                isLoggedIn = true;
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("adminDashboard").style.display = "block";
+                renderProductsList();
+                document.getElementById("passwordInput").value = "";
+            } else {
+                alert("❌ رمز عبور اشتباه است!");
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById("productName").value.trim();
+            const category = document.getElementById("productCategory").value;
+            const price = document.getElementById("productPrice").value.trim();
+            const desc = document.getElementById("productDesc").value.trim();
+
+            if (!name || !price) {
+                alert("⚠️ لطفا تمام فیلدها را پر کنید!");
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                cat: category,
+                name,
+                price,
+                desc,
+                icon: CATEGORIES[category].charAt(0)
+            };
+
+            products.push(newProduct);
+            saveProducts();
+            filterProducts();
+            renderProductsList();
+
+            document.getElementById("productName").value = "";
+            document.getElementById("productPrice").value = "";
+            document.getElementById("productDesc").value = "";
+            alert("✅ محصول افزوده شد!");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("آیا مطمئنید؟")) {
+                products = products.filter(p => p.id !== id);
+                saveProducts();
+                filterProducts();
+                renderProductsList();
+                alert("✅ محصول حذف شد!");
+            }
+        }
+
+        function renderProductsList() {
+            const container = document.getElementById("productsList");
+            if (products.length === 0) {
+                container.innerHTML = "<p style='color: var(--text-muted);'>هیچ محصولی موجود نیست</p>";
+                return;
+            }
+
+            container.innerHTML = products.map(p => `
+                <div class="product-item">
+                    <div class="product-item-name">
+                        <strong>${p.name}</strong><br>
+                        <small style="color: var(--text-muted);">${CATEGORIES[p.cat]}</small>
+                    </div>
+                    <div class="product-item-price">${p.price}</div>
+                    <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button>
+                </div>
+            `).join("");
+        }
+
+        function orderProduct(name) {
+            const message = `سلام، من ${name} را سفارش می‌دهم`;
+            const phone = "989123456789"; // شماره واتس‌اپ را تغییر بده
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`);
+        }
+
+        // Init
+        document.addEventListener("DOMContentLoaded", () => {
+            loadProducts();
+            renderCategories();
+        });
+    </script>
+</body>
+</html>
