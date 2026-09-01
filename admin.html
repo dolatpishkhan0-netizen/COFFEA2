@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A2 | پنل مدیریت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div id="login" class="login-page"><div class="login-card"><div class="big-mark">A2</div><h1>پنل مدیریت منو</h1><p>مدیریت سریع آیتم‌ها، قیمت‌ها و دسته‌بندی‌ها</p><input id="pass" type="password" placeholder="رمز عبور"><button id="loginBtn">ورود</button><small>رمز اولیه: <b>admin123</b> — بعداً در فایل قابل تغییر است.</small></div></div>
+<div id="panel" class="panel hidden">
+<aside><div class="aside-brand">A2 <span>ADMIN</span></div>
+<button class="nav active" data-page="dashboard">⌂ داشبورد</button>
+<button class="nav" data-page="products">🍽️ آیتم‌های منو</button>
+<button class="nav" data-page="categories">☰ دسته‌بندی‌ها</button>
+<button class="nav" data-page="settings">⚙️ تنظیمات</button>
+<button class="nav" data-page="qr">▣ QR Code</button>
+<div class="aside-bottom"><a href="index.html" target="_blank">↗ مشاهده منو</a><button id="logout">خروج</button></div>
+</aside>
+<main><div class="mobile-head"><b>A2 ADMIN</b><a href="index.html">منو</a></div><div id="content"></div></main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="admin.js"></script>
+</body></html>

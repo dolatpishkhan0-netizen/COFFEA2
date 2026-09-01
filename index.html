@@ -1,1 +1,57 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A2 | منوی دیجیتال</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="noise"></div>
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="topbar">
+    <div class="brand"><span class="brand-mark">A2</span><div><b id="brandName">A2</b><small>CAFÉ • FOOD • EXPERIENCE</small></div></div>
+    <button class="admin-link" onclick="location.href='admin.html'">مدیریت</button>
+  </div>
+  <div class="hero-content">
+    <div class="kicker" id="kicker">✦ A2 DIGITAL EXPERIENCE</div>
+    <h1>منوی دیجیتال <span id="heroBrand">A2</span></h1>
+    <p id="heroSubtitle">تجربه‌ای متفاوت در هر فنجان و هر بشقاب</p>
+    <button class="cta" onclick="document.querySelector('.menu-shell').scrollIntoView({behavior:'smooth'})">مشاهده منو ↓</button>
+  </div>
+</header>
 
+<main class="menu-shell">
+  <div class="section-head">
+    <div><span class="eyebrow">DIGITAL MENU</span><h2>چی میل دارید؟</h2></div>
+    <button class="search-btn" id="searchToggle">⌕</button>
+  </div>
+
+  <div class="search-wrap" id="searchWrap">
+    <input id="searchInput" placeholder="جستجوی غذا، نوشیدنی یا دسر...">
+  </div>
+
+  <div class="category-slider-wrap">
+    <button class="slide-arrow prev" id="prevCat">‹</button>
+    <div class="category-slider" id="categorySlider"></div>
+    <button class="slide-arrow next" id="nextCat">›</button>
+  </div>
+
+  <div id="featuredArea"></div>
+  <div class="products-grid" id="productsGrid"></div>
+</main>
+
+<div class="bottom-nav">
+  <button class="active" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂<span>خانه</span></button>
+  <button onclick="document.querySelector('.category-slider').scrollIntoView({behavior:'smooth'})">☰<span>دسته‌بندی</span></button>
+  <button onclick="document.getElementById('searchToggle').click()">⌕<span>جستجو</span></button>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
